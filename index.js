@@ -13,17 +13,24 @@
 //     fibonnaci(8) //  [0, 1, 1, 2, 3, 5, 8, 13,21]  
 // ```
 
-// again, got it from Stack Overflow - this time I don't understand the solution at all... I can't even try to write the different steps out, don't get it at all
+// again, got it from Stack Overflow - and from Joel's explanation, now it's clearer
 
 const fibonnaci = number => {
     if (number === 0) {
-        return [0];
+        return [number];
     };
     if (number === 1) {
-        return [0, 1];
+        return [number - 1, number];
     };
-    let array = fibonnaci(number - 1);
-    return [...array, array[number - 2] + array[number -1]];
+
+    let previous = fibonnaci(number - 1); // previous will be an array
+    
+    const currentNumber = previous[previous.length - 2] + previous[previous.length - 1];
+    previous.push(currentNumber);
+
+    return previous;
+    // shorter way, but harder to understand: 
+    // return [...previous, previous[number - 2] + previous[number -1]];  // return array with all previous elements and add new elements by adding the sum of the previous 2 numbers
 };
 
 const result = fibonnaci(8);
@@ -35,7 +42,7 @@ console.log(result);
 const fib = number => {
     
     let resArray = [0, 1];
-    for (counter = 0; counter < number - 1; counter++) {
+    for (counter = 0; counter < number - 1; counter++) { // same condition as in the recursion above
         resArray.push(resArray[resArray.length - 2] + resArray[resArray.length - 1]);
     };
     return resArray;
